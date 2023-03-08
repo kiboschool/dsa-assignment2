@@ -54,25 +54,44 @@ class Sort:
     # get the maximum number of digits
     # among any number in the input list
     def get_max_num_digits(lst):
-        # Task 2, Step 1
-        return 0
+        max_len = 0
+        for num in lst:
+            if len(str(num)) > max_len:
+                max_len = len(str(num))
+        return max_len
 
     # converts a list of numbers to a list
     # of buckets, with entries sorted by
     # their least significant digit
     def list_to_buckets(self, lst):
-        # Task 2, Step 2
-        return None
+        buckets = Sort.get_new_buckets(10)
+        for num in lst:
+            buckets[Sort.digit(num, 0)].append(num)
+            self.moves += 1
+        return buckets
 
     # converts a list of buckets
     # into a one-dimensional list
     def buckets_to_list(self, buckets):
-        # Task 2, Step 3
-        return None
+        lst = []
+        for bucket in buckets:
+            for num in bucket:
+                lst.append(num)
+        return lst
 
     # sort a list of numbers by distributing
     # them to buckets according to their digits
     def radix_sort(self, lst):
-        # Task 2, Step 4
-        return None
+        num_digits = Sort.get_max_num_digits(lst)
+        buckets = self.list_to_buckets(lst)
+        for i in range(1, num_digits):
+            new_buckets = Sort.get_new_buckets(10)
+            for bucket in buckets:
+                for num in bucket:
+                    new_buckets[Sort.digit(num, i)].append(num)
+                    self.moves += 1
+            buckets = new_buckets
+
+        return self.buckets_to_list(buckets)
+>>>>>>> ac30f2d (Add solutions)
 
